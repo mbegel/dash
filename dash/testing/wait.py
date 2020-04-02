@@ -82,7 +82,6 @@ class text_to_equal(object):
                 or str(elem.get_attribute("value")) == self.text
             )
         except WebDriverException:
-            logger.exception("text_to_equal encountered an exception")
             return False
 
 
