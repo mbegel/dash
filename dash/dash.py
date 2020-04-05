@@ -1155,7 +1155,7 @@ class Dash(object):
             _validate_value(output_value)
 
     # pylint: disable=dangerous-default-value
-    def clientside_callback(self, clientside_function, output, inputs=[], state=[]):
+    def clientside_callback(self, clientside_function, output, input=[], state=[]):
         """Create a callback that updates the output by calling a clientside
         (JavaScript) function instead of a Python function.
 
@@ -1216,6 +1216,9 @@ class Dash(object):
         )
         ```
         """
+        is_multi_input = isinstance(input, (list, tuple))
+        inputs = input if is_multi_input else [input]
+
         self._validate_callback(output, inputs, state)
         callback_id = _create_callback_id(output)
 
@@ -1272,7 +1275,9 @@ class Dash(object):
     # TODO - Check this map for recursive or other ill-defined non-tree
     # relationships
     # pylint: disable=dangerous-default-value
-    def callback(self, output, inputs=[], state=[]):
+    def callback(self, output, input=[], state=[]):
+        is_multi_input = isinstance(input, (list, tuple))
+        inputs = input if is_multi_input else [input]
         self._validate_callback(output, inputs, state)
 
         callback_id = _create_callback_id(output)
